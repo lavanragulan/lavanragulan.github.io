@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YOUR NAME — Portfolio (Data · Risk · Consulting)</title>
+  <meta name="description" content="Portfolio showcasing projects across data, risk, and consulting — with case studies, skills, and writing samples." />
+  <meta property="og:title" content="Lavan Ragulan — Portfolio" />
+  <meta property="og:description" content="Projects and case studies across data, risk, and consulting." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.com/lavanragulan/lavanragulan.github.io" />
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    /* ================================
+       Design tokens
+    =================================*/
+    :root{
+      --bg: #ffffff;
+      --surface: #f7f7f9;
+      --text: #101214;
+      --muted: #5b616e;
+      --primary: #2d6cdf; /* link/buttons */
+      --primary-ink: #ffffff;
+      --ring: #9db9ff;
+      --border: #e6e8ec;
+      --chip: #eef3ff;
+      --ok: #12805c;
+      --warn: #b76e00;
+      --danger: #b42318;
+      --shadow: 0 10px 30px rgba(16,18,20,0.08);
+      --radius: 16px;
+      --maxw: 1100px;
+    }
+    html[data-theme="dark"]{
+      --bg: #0b0d10;
+      --surface: #12161b;
+      --text: #e8eaed;
+      --muted: #9aa0a6;
+      --primary: #8ab4f8;
+      --primary-ink: #0b0d10;
+      --ring: #3b82f6;
+      --border: #1f2329;
+      --chip: #0f1a2e;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    /* ================================
+       Base
+    =================================*/
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a{ color: var(--primary); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+    img{ max-width: 100%; height: auto; display: block; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+    .container{ max-width: var(--maxw); margin: 0 auto; padding: 24px; }
+
+    /* ================================
+       Header/Nav
+    =================================*/
+    header{
+      position: sticky; top: 0; z-index: 100; backdrop-filter: saturate(150%) blur(8px);
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav{
+      display: flex; align-items: center; gap: 18px; justify-content: space-between;
+    }
+    .brand{ display: flex; align-items: center; gap: 12px; font-weight: 700; }
+    .brand .dot{ width: 10px; height: 10px; background: var(--primary); border-radius: 999px; box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 20%, transparent); }
+    .nav a.btn{ text-decoration: none; }
+    .navmenu{ display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+    .btn{
+      display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+      padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface);
+      color: var(--text); text-decoration: none; box-shadow: var(--shadow);
+    }
+    .btn.primary{ background: var(--primary); color: var(--primary-ink); border-color: color-mix(in srgb, var(--primary) 35%, var(--border)); }
+    .btn.ghost{ background: transparent; border-color: var(--border); box-shadow: none; }
+
+    .theme-toggle{ border-radius: 999px; padding: 8px 12px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; }
+
+    /* ================================
+       Hero
+    =================================*/
+    .hero{ padding: 48px 0 12px; }
+    .hero h1{ font-size: clamp(28px, 4vw, 40px); line-height: 1.2; margin: 0 0 8px; letter-spacing: -0.02em; }
+    .hero p.lead{ color: var(--muted); margin: 0 0 18px; font-size: clamp(15px, 2.5vw, 18px); }
+    .quicklinks{ display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+
+    .badges{ display:flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .badge{ padding: 6px 10px; background: var(--chip); color: var(--text); border: 1px solid var(--border); border-radius: 999px; font-size: 13px; }
+
+    /* ================================
+       Sections
+    =================================*/
+    section{ padding: 26px 0; }
+    .section-title{ font-size: 20px; letter-spacing: 0.02em; margin: 0 0 14px; }
+    .card{
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow);
+    }
+    .grid{ display: grid; gap: 18px; }
+    @media(min-width: 720px){
+      .grid.cols-3{ grid-template-columns: repeat(3, 1fr); }
+      .grid.cols-2{ grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Projects */
+    .filters{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 14px; }
+    .filter-btn{ padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); cursor:pointer; }
+    .filter-btn[aria-pressed="true"]{ background: var(--primary); color: var(--primary-ink); border-color: color-mix(in srgb, var(--primary) 35%, var(--border)); }
+    .project{ display:flex; flex-direction: column; gap: 10px; }
+    .project h3{ margin: 0; font-size: 18px; }
+    .meta{ color: var(--muted); font-size: 14px; }
+    .tags{ display:flex; flex-wrap:wrap; gap:6px; }
+    .tag{ font-size: 12px; padding: 4px 8px; border-radius: 999px; background: var(--chip); border: 1px solid var(--border); }
+
+    /* Experience */
+    .xp{ display:grid; gap: 12px; }
+    .xp .row{ display:flex; gap:12px; justify-content: space-between; align-items: baseline; }
+    .xp .company{ font-weight: 600; }
+    .xp .role{ color: var(--muted); }
+
+    /* Footer */
+    footer{ padding: 30px 0 60px; color: var(--muted); text-align: center; }
+
+    /* Print tweaks (nice one-pager PDF) */
+    @media print{
+      header, .theme-toggle, .filters, .quicklinks .btn{ display: none !important; }
+      .container{ max-width: 100%; padding: 0; }
+      body{ background: #fff; color: #000; }
+      .card{ break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Main">
+      <div class="brand"><span class="dot" aria-hidden="true"></span><span>YOUR NAME</span></div>
+      <nav class="navmenu">
+        <a href="#projects" class="btn ghost">Projects</a>
+        <a href="#experience" class="btn ghost">Experience</a>
+        <a href="#skills" class="btn ghost">Skills</a>
+        <a href="#writing" class="btn ghost">Writing</a>
+        <a href="#contact" class="btn ghost">Contact</a>
+        <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener">Download Resume</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ===============================
+         HERO
+         Replace placeholders below.
+         Keep the tagline concise.
+    =================================-->
+    <section class="hero" id="home">
+      <h1>Analytics generalist: <span class="nowrap">Data · Risk · Consulting</span></h1>
+      <p class="lead">I turn messy data into decisions. My work spans predictive modeling, risk evaluation, and strategy cases — translating numbers into clarity and action.</p>
+      <div class="quicklinks">
+        <a class="btn" href="mailto:you@example.com">✉️ Email</a>
+        <a class="btn" href="https://www.linkedin.com/in/your-link" target="_blank" rel="noopener">in/LinkedIn</a>
+        <a class="btn" href="https://github.com/your-handle" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="#projects">↓ View Projects</a>
+      </div>
+      <div class="badges" aria-label="quick skill badges">
+        <span class="badge">Python</span>
+        <span class="badge">SQL</span>
+        <span class="badge">Power BI</span>
+        <span class="badge">Excel/VBA</span>
+        <span class="badge">scikit-learn</span>
+        <span class="badge">Risk Modeling</span>
+        <span class="badge">Strategy Frameworks</span>
+      </div>
+    </section>
+
+    <!-- ===============================
+         PROJECTS
+         Tag each project with data-tags="data risk consulting" as needed.
+         Fill links for GitHub/Report/Live as appropriate.
+    =================================-->
+    <section id="projects">
+      <h2 class="section-title">Highlighted Projects</h2>
+      <div class="filters" role="toolbar" aria-label="Project filters">
+        <button class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-btn" data-filter="data">Data</button>
+        <button class="filter-btn" data-filter="risk">Risk</button>
+        <button class="filter-btn" data-filter="consulting">Consulting</button>
+      </div>
+
+      <div class="grid cols-3" id="projectGrid">
+        <!-- Project 1 -->
+        <article class="card project" data-tags="data">
+          <h3>House Prices ML — Regularization & Feature Engineering</h3>
+          <p class="meta">Python · scikit-learn · LASSO/Ridge · PCA · MICE</p>
+          <p>Built an end‑to‑end regression pipeline with imputation, feature engineering (e.g., TotalSF), and model selection via cross‑validation. Delivered a top‑quartile leaderboard score and a clear, reproducible notebook.</p>
+          <div class="tags"><span class="tag">Data</span><span class="tag">ML</span><span class="tag">Regression</span></div>
+          <p>
+            <a href="#" target="_blank" rel="noopener">GitHub</a> ·
+            <a href="#" target="_blank" rel="noopener">Report</a>
+          </p>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="card project" data-tags="risk">
+          <h3>Scenario Reserving & Loss Driver Analysis</h3>
+          <p class="meta">Excel/VBA · Python · Actuarial · Time Series</p>
+          <p>Presented scenario‑based reserving analyses and large‑loss investigations to senior leaders. Translated technical outputs into rate implications and portfolio actions.</p>
+          <div class="tags"><span class="tag">Risk</span><span class="tag">Actuarial</span><span class="tag">Scenario Modeling</span></div>
+          <p>
+            <a href="#" target="_blank" rel="noopener">Slides</a>
+          </p>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="card project" data-tags="consulting">
+          <h3>PathAI Ethics Audit — Strategy & Governance</h3>
+          <p class="meta">DELTA+ · SWOT · AI Ethics (MMA803)</p>
+          <p>Audited a healthcare AI tool across fairness, privacy, accountability, and transparency. Produced recommendations, a governance checklist, and a stakeholder‑ready summary memo.</p>
+          <div class="tags"><span class="tag">Consulting</span><span class="tag">Ethics</span><span class="tag">Frameworks</span></div>
+          <p>
+            <a href="#" target="_blank" rel="noopener">Brief</a>
+          </p>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="card project" data-tags="data consulting">
+          <h3>Customer Churn Dashboard & Playbook</h3>
+          <p class="meta">Power BI · SQL · Stakeholder Storytelling</p>
+          <p>Built a decision dashboard and an executive playbook linking churn segments to actionable retention levers. Reduced time‑to‑insight and aligned teams on KPIs.</p>
+          <div class="tags"><span class="tag">Data</span><span class="tag">Consulting</span><span class="tag">BI</span></div>
+          <p>
+            <a href="#" target="_blank" rel="noopener">Demo</a>
+          </p>
+        </article>
+
+        <!-- Project 5 -->
+        <article class="card project" data-tags="risk data">
+          <h3>Transaction Monitoring — Anomaly Detection</h3>
+          <p class="meta">Python · Isolation Forest · Risk Scoring</p>
+          <p>Built an anomaly pipeline to flag suspicious patterns, prioritize alerts, and document decisions. Improved precision at top‑k and reduced false positives.</p>
+          <div class="tags"><span class="tag">Risk</span><span class="tag">Data</span><span class="tag">AML</span></div>
+          <p>
+            <a href="#" target="_blank" rel="noopener">GitHub</a> ·
+            <a href="#" target="_blank" rel="noopener">Report</a>
+          </p>
+        </article>
+
+        <!-- Project 6 (example writing-heavy consulting case) -->
+        <article class="card project" data-tags="consulting">
+          <h3>Market Entry Case — Sizing & 3 Horizons</h3>
+          <p class="meta">Case Structuring · TAM/SAM/SOM · 3 Horizons</p>
+          <p>Framed a market entry for a SaaS fintech, quantified opportunity size, and sequenced bets across H1/H2/H3 with risks, assumptions, and KPIs.</p>
+          <div class="tags"><span class="tag">Consulting</span><span class="tag">Strategy</span></div>
+          <p>
+            <a href="#" target="_blank" rel="noopener">Deck</a>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===============================
+         EXPERIENCE
+         Keep bullets results-oriented and concise.
+    =================================-->
+    <section id="experience">
+      <h2 class="section-title">Experience</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <div class="xp">
+            <div class="row"><span class="company">Company / Team</span><span class="role">City · 2023–2024</span></div>
+            <div><strong>Role Title</strong></div>
+            <ul>
+              <li>Presented scenario‑based analyses to senior leadership; influenced pricing/portfolio decisions.</li>
+              <li>Investigated loss drivers, recommended remediation actions, and built monitoring views.</li>
+              <li>Partnered cross‑functionally to translate model outputs into business moves.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="xp">
+            <div class="row"><span class="company">Company / Function</span><span class="role">City · 2022–2023</span></div>
+            <div><strong>Role Title</strong></div>
+            <ul>
+              <li>Built analytics assets (SQL/Python/BI) to enable faster decision‑making.</li>
+              <li>Automated manual workflows; cut cycle time for weekly reporting by 60%.</li>
+              <li>Created stakeholder‑friendly documentation and playbooks.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===============================
+         SKILLS
+    =================================-->
+    <section id="skills">
+      <h2 class="section-title">Skills Snapshot</h2>
+      <div class="card">
+        <div class="badges" aria-label="skills list">
+          <span class="badge">Python</span>
+          <span class="badge">pandas</span>
+          <span class="badge">scikit‑learn</span>
+          <span class="badge">SQL</span>
+          <span class="badge">Power BI</span>
+          <span class="badge">Excel/VBA</span>
+          <span class="badge">Git/GitHub</span>
+          <span class="badge">Risk/Scenario Modeling</span>
+          <span class="badge">Actuarial Concepts</span>
+          <span class="badge">Strategy Frameworks</span>
+          <span class="badge">Stakeholder Storytelling</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===============================
+         WRITING / TALKS
+    =================================-->
+    <section id="writing">
+      <h2 class="section-title">Writing & Talks</h2>
+      <div class="grid">
+        <article class="card">
+          <h3 style="margin:0 0 8px;">AI Ethics Journal — Notes on Transparency & Fairness</h3>
+          <p class="meta">Course reflections · 5 min read</p>
+          <p>Concise reflections on transparency, bias, and governance in ML systems; links to readings and class slides.</p>
+          <p><a href="#" target="_blank" rel="noopener">Read post</a></p>
+        </article>
+        <article class="card">
+          <h3 style="margin:0 0 8px;">Risk Analytics: Prioritizing Alerts with Precision@K</h3>
+          <p class="meta">How‑to · 4 min read</p>
+          <p>Short write‑up on using anomaly scores and business rules to tune alert queues and reduce false positives.</p>
+          <p><a href="#" target="_blank" rel="noopener">Read post</a></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===============================
+         CONTACT
+    =================================-->
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="card">
+        <p><strong>Based in:</strong> City, Country · Open to roles in Data, Risk, and Consulting</p>
+        <p><strong>Email:</strong> <a href="mailto:you@example.com">you@example.com</a> · <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/your-link" target="_blank" rel="noopener">your‑link</a> · <strong>GitHub:</strong> <a href="https://github.com/your-handle" target="_blank" rel="noopener">your‑handle</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <small>© <span id="year"></span> YOUR NAME. Last updated <span id="lastUpdated"></span>. • This site is lightweight (no frameworks) and prints cleanly to PDF.</small>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Year and last updated
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const updated = new Date(document.lastModified);
+    document.getElementById('lastUpdated').textContent = updated.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'2-digit' });
+
+    // ===== Theme toggle with localStorage
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme){ root.setAttribute('data-theme', savedTheme); }
+    toggle.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // ===== Project filtering
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.project');
+    function setFilter(tag){
+      cards.forEach(card => {
+        const tags = (card.getAttribute('data-tags') || '').split(/\s+/);
+        const show = tag === 'all' || tags.includes(tag);
+        card.style.display = show ? 'flex' : 'none';
+      });
+      btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === tag)));
+    }
+    btns.forEach(b => b.addEventListener('click', () => setFilter(b.dataset.filter)));
+
+    // Start with "All"
+    setFilter('all');
+  </script>
+
+  <!--
+    ===============================
+    QUICK HOW‑TO
+    1) Replace YOUR NAME, links, and placeholders above.
+    2) Put a PDF named resume.pdf next to this file to enable the Download Resume button.
+    3) Host on GitHub Pages:
+       • Create a repo named username.github.io
+       • Add this file as index.html (and resume.pdf)
+       • Commit & push; site goes live at https://username.github.io
+    4) Optional custom domain: add a CNAME file with your domain and point DNS to GitHub Pages.
+    5) Print to PDF for a one‑pager portfolio: Ctrl/Cmd+P.
+  -->
+</body>
+</html>
